@@ -1,0 +1,24 @@
+{
+  "name": "PowerStart",
+  "version": "1.0",
+  "description": "PowerStart",
+  "authors": [
+    "OtterCrew"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "gulp",
+    "bower"
+  ],
+  "homepage": "",
+  "devDependencies": {
+    "foundation-sites": "6.1.1"
+  }
+}

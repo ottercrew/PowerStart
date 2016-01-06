@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["main.js"],"sourcesContent":["jQuery(document).ready(function($){\r\n\r\n\t$(document).foundation();\r\n\t\r\n});"],"file":"main.js","sourceRoot":"/source/"}
