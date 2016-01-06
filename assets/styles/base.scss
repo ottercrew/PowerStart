@@ -1,0 +1,10 @@
+body {
+	font-size: $font-size;
+}
+
+//pagination 
+.pagination {
+	.current, a, button {
+		display: inline-block;
+	}
+}

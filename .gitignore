@@ -1,0 +1,25 @@
+
+# NPM
+node_modules/*
+
+# Wordpress
+public/wordpress/*
+public/content/*
+
+# Dotenv
+.env
+.env.*
+!.env.example
+
+# Shipitfile
+shipitfile.js
+shipitfile.js.*
+!shipitfile.js.example
+
+# Vendors
+vendor/*
+!vendor/.gitkeep
+composer.lock
+
+# Mac
+.DS_STORE

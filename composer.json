@@ -1,0 +1,55 @@
+{
+  "name": "ottercrew/wordpress-workflow",
+  "type": "project",
+  "license": "MIT",
+  "description": "A modern WordPress Workflow",
+  "homepage": "https://www.ottercrew.com/wordpress-workflow",
+  "authors": [
+    {
+      "name": "Agli Panci",
+      "email": "agli.panci@gmail.com",
+      "homepage": "https://github.com/aglipanci"
+    }
+  ],
+  "keywords": [
+    "wordpress",
+    "workflow",
+    "composer",
+    "wp"
+  ],
+  "config": {
+    "preferred-install": "dist"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://wpackagist.org"
+    }
+  ],
+  "require": {
+    "php": ">=5.5",
+    "composer/installers": "~1.0.12",
+    "vlucas/phpdotenv": "^2.0.1",
+    "johnpbloch/wordpress": "4.3.1",
+    "wp-cli/wp-cli": "dev-master",
+    "wpackagist-plugin/regenerate-thumbnails": "*",
+    "wpackagist-plugin/monkeyman-rewrite-analyzer": "*",
+    "wpackagist-plugin/debug-bar": "*",
+    "wpackagist-plugin/query-monitor": "*"
+
+  },
+  "extra": {
+    "installer-paths": {
+      "public/content/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "public/content/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "public/content/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
+    },
+    "wordpress-install-dir": "public/wordpress"
+  }
+}

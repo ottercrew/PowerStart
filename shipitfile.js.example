@@ -1,0 +1,53 @@
+module.exports = function (shipit) {
+  require('shipit-deploy')(shipit);   //For more info check here: https://github.com/shipitjs/shipit-deploy
+  require('shipit-composer')(shipit); // For more info check here: https://github.com/jeremyzahner/shipit-composer
+  require('shipit-npm')(shipit);      // For more info check here: https://github.com/callerc1/shipit-npm
+
+  // Default Shipit Config
+  var default_config = {
+          workspace: '/home/user/myproject', // Define a path to an empty directory where Shipit builds it's syncing source. Beware to not set this path to the root of your repository as shipit-deploy cleans the directory at the given path as a first step.
+          deployTo: '/var/www/myproject', // Define the remote path where the project will be deployed. A directory releases is automatically created. A symlink current is linked to the current release.
+          repositoryUrl: 'git@github.com:user/myproject.git', // Git REPO url of the project
+          ignores: ['.git', 'node_modules', 'vendor'], // Directories to ignore
+          rsync: ['--del'], // RSync Parameters
+          keepReleases: 4, // Number or releases to keep on server
+          key: '/home/user/.ssh/id_rsa', // Private Key path to use for the server
+          composer: { // Load PHP Composer Shiptit module 
+          remote: true,
+          composerCommand: '/usr/local/bin/composer' // Composer bin path
+          },
+          npm: { // Load NPM Shiptit module
+          remote: true
+          }
+    };
+
+  // Staging Env Config 
+  var staging_config = {
+        servers: [{
+          host: 'localhost', // host
+          user: 'user',      // user
+        }]
+      };
+
+  /**
+   * Sample Production Env Config
+   * 
+    var production_config = {
+      servers: [{
+        host: 'app1.myproject.com',
+        user: 'john',
+      }, {
+        host: 'app2.myproject.com',
+        user: 'rob',
+      }],
+      branch: 'production',
+      workspace: '/var/www/website'
+    };
+   */
+    
+  // Load Shiptit with configs
+  shipit.initConfig({
+    default:  default_config,
+    staging: staging_config
+  });
+};
