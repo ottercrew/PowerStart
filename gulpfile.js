@@ -25,7 +25,7 @@ var paths = {
 	'theme': './theme'
 }
 
-var config = {
+var configs = {
 	'port': 9000,
 	'dir': './theme'
 }
@@ -128,8 +128,19 @@ gulp.task('serve', function() {
 
   php.server(serverConfig, function (){
     browserSync({
-      proxy: '127.0.0.1:8000',
-      port: 9000,
+      proxy: { 
+      	target: "localhost:8000",
+        reqHeaders: function (config) {
+            return {
+                "host":"localhost:" + configs.port
+            }
+        }
+        },
+      snippetOptions: {
+        whitelist: ["/wordpress/wp-admin/admin-ajax.php"],
+        blacklist: ["/wordpress/wp-admin/**"]
+    	},
+      port: configs.port,
       open: true,
       watchTask: true,
       reloadDelay: 300, // Give browser some delay to make sure file change event has finished.
@@ -139,9 +150,7 @@ gulp.task('serve', function() {
 
 // Symblink of themes inside the content
 gulp.task('theme-symblink', function () {
-
   var themePath = 'public/content/themes/' + process.env.THEME_NAME;
-
   fs.lstat(themePath, function(err, stat){
 
       // Create symlink only if not exists
@@ -169,4 +178,4 @@ gulp.task('zip', function() {
 gulp.task('production', gulpSequence('clean', ['styles', 'scripts']));
 
 //Default Task
-gulp.task('default', ['styles', 'scripts', 'images', 'theme-symblink', 'serve']);
+gulp.task('default', ['styles', 'scripts', 'images', 'theme-symblink', 'serve', 'watch']);
