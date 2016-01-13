@@ -51,7 +51,7 @@ Start Gulp
 
         gulp
 
-You should have your installation running on http://localhost:3000 and WP Admin on http://localhost:3000/wordpress/wp-admin
+You should have your installation running on http://localhost:9000 and WP Admin on http://localhost:9000/wordpress/wp-admin
 
 Tasks
 ===========
