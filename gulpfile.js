@@ -13,10 +13,11 @@ var argv         = require('yargs').argv;
 var del          = require('del');
 var gulpSequence = require('gulp-sequence').use(gulp);
 var zip          = require('gulp-zip');
-var browserSync  = require('browser-sync');
+var browserSync  = require('browser-sync').create();
 var symlink     = require('gulp-symlink');
 var php         = require('gulp-connect-php');
 var fs          = require('fs');
+var path = require('path');
 require('dotenv').load();
 
 var paths = {
@@ -110,42 +111,38 @@ gulp.task('images', function () {
         .pipe(gulp.dest(paths.theme + '/img'));
 });
 
-//Watch Task
-gulp.task('watch', function() {
-	gulp.watch(paths.assets + '/styles/**/*.scss', ['styles-watch']);
-	gulp.watch(paths.assets + '/scripts/**/*.js', ['scripts-watch']);
-	gulp.watch('theme/**/*.php').on('change', function () {
-		browserSync.reload();
-	});
-});
 
 // PHP Server
 gulp.task('serve', function() {
   
 	var serverConfig = {
 		base: 'public',
+		router: path.resolve('./public/router.php')
   };
 
   php.server(serverConfig, function (){
-    browserSync({
+    browserSync.init({
       proxy: { 
       	target: "localhost:8000",
         reqHeaders: function (config) {
             return {
-                "host":"localhost:" + configs.port
+                //"host":"localhost:" + configs.port
             }
         }
-        },
-      snippetOptions: {
-        whitelist: ["/wordpress/wp-admin/admin-ajax.php"],
-        blacklist: ["/wordpress/wp-admin/**"]
     	},
       port: configs.port,
       open: true,
       watchTask: true,
-      reloadDelay: 300, // Give browser some delay to make sure file change event has finished.
+      snippetOptions: {
+      	whitelist: ["**"],
+      }
     });
   });
+	gulp.watch(paths.assets + '/styles/**/*.scss', ['styles-watch']);
+	gulp.watch(paths.assets + '/scripts/**/*.js', ['scripts-watch']);
+	gulp.watch('theme/**/*.php').on('change', function () {
+		browserSync.reload();
+	});
 });
 
 // Symblink of themes inside the content
@@ -178,4 +175,4 @@ gulp.task('zip', function() {
 gulp.task('production', gulpSequence('clean', ['styles', 'scripts']));
 
 //Default Task
-gulp.task('default', ['styles', 'scripts', 'images', 'theme-symblink', 'serve', 'watch']);
+gulp.task('default', ['styles', 'scripts', 'images', 'theme-symblink', 'serve']);

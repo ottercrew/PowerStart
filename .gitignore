@@ -16,6 +16,9 @@ shipitfile.js
 shipitfile.js.*
 !shipitfile.js.example
 
+# Bower
+bower_components
+
 # Vendors
 vendor/*
 !vendor/.gitkeep
