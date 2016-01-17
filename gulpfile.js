@@ -14,10 +14,12 @@ var del          = require('del');
 var gulpSequence = require('gulp-sequence').use(gulp);
 var zip          = require('gulp-zip');
 var browserSync  = require('browser-sync').create();
-var symlink     = require('gulp-symlink');
-var php         = require('gulp-connect-php');
-var fs          = require('fs');
-var path = require('path');
+var symlink      = require('gulp-symlink');
+var php          = require('gulp-connect-php');
+var fs           = require('fs');
+var path         = require('path');
+var shell        = require('gulp-shell');
+
 require('dotenv').load();
 
 var paths = {
@@ -134,7 +136,7 @@ gulp.task('serve', function() {
       open: true,
       watchTask: true,
       snippetOptions: {
-      	whitelist: ['/wordpress/wp-admin/admin-ajax.php'],
+      	whitelist: ['/wordpress/wp-admin/admin-ajax.php'],	
       	blacklist: ['/wordpress/wp-admin']
       }
     });
@@ -153,7 +155,7 @@ gulp.task('theme-symblink', function () {
 
       // Create symlink only if not exists
       if(stat == 'undefined' || err) {
-        return gulp.src('theme').pipe(symlink(themePath));
+        return gulp.src('theme').pipe(symlink(themePath)).pipe(shell(['vendor/bin/wp theme activate ' + process.env.THEME_NAME + ' --path="'+ path.resolve('./public/wordpress') +'"']));
       } else {
         return console.log('Symlink exists!');
       }
