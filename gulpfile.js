@@ -126,7 +126,7 @@ gulp.task('serve', function() {
       	target: "localhost:8000",
         reqHeaders: function (config) {
             return {
-                //"host":"localhost:" + configs.port
+                "host":"localhost:" + configs.port
             }
         }
     	},
@@ -134,7 +134,8 @@ gulp.task('serve', function() {
       open: true,
       watchTask: true,
       snippetOptions: {
-      	whitelist: ["**"],
+      	whitelist: ['/wordpress/wp-admin/admin-ajax.php'],
+      	blacklist: ['/wordpress/wp-admin']
       }
     });
   });
